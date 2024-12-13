@@ -1,10 +1,19 @@
 import css from "./Contact.module.css";
 import { useDispatch } from "react-redux";
-import { deleteContact } from "../../redux/contactsSlice";
+import { deleteContact } from "../../redux/contactsOps";
+
 
 const Contact = ({contact}) => {
   const dispatch = useDispatch();
-  const onDelete = () => dispatch(deleteContact(contact.id));
+
+const onDelete = async () => {
+    try {
+      const result = await dispatch(deleteContact(contact.id)).unwrap(); 
+      console.log(result);
+    } catch (error) {
+      console.error("Failed to delete contact:", error);
+    }
+  };
 
   return (
     <li className={css.contactItem}>
